@@ -5,7 +5,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 
 # 镜像名：目录名
-PROJECT_NAME="${PROJECT_NAME:-$(basename "$SCRIPT_DIR")}"
+PROJECT_NAME="yearsyan/lynx-bundler"
 
 # 获取最近 Git tag
 get_git_tag() {
@@ -50,8 +50,8 @@ fi
 # ----------------------
 
 if ! docker image inspect "${IMAGE_NAME}" >/dev/null 2>&1; then
-  echo "==> 镜像 ${IMAGE_NAME} 不存在，自动构建..."
-  "${SCRIPT_DIR}/build-docker.sh" "${TAG}"
+  echo "==> 镜像 ${IMAGE_NAME} 不存在，拉取中"
+  docker pull "${IMAGE_NAME}"
 fi
 
 # ----------------------
