@@ -9,12 +9,13 @@ PROJECT_NAME="yearsyan/lynx-bundler"
 
 # 获取最近 Git tag
 get_git_tag() {
-    if git -C "$SCRIPT_DIR" describe --tags --abbrev=0 >/dev/null 2>&1; then
-        git -C "$SCRIPT_DIR" describe --tags --abbrev=0
+    if tag=$(git -C "$SCRIPT_DIR" describe --tags --abbrev=0 2>/dev/null); then
+        echo "${tag#v}"
     else
         echo "latest"
     fi
 }
+
 
 TAG="${TAG:-$(get_git_tag)}"
 IMAGE_NAME="${PROJECT_NAME}:${TAG}"
