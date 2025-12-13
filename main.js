@@ -82,8 +82,9 @@ async function getGitCommitHash(repoPath) {
 async function uploadFile(uploadUrl, uploadToken, filePath, uploadPath) {
   const form = new FormData();
   form.append("file", new Blob([await readFile(filePath)]), { type: "application/octet-stream" });
-  const response = await fetch(`${uploadUrl}?name=${encodeURIComponent(uploadPath)}&token=${encodeURIComponent(uploadToken)}`, {
+  const response = await fetch(`${uploadUrl}?name=${encodeURIComponent(uploadPath)}`, {
     method: 'POST',
+    header: { Authorization: `Bearer ${uploadToken}` }
     body: form,
   })
   if (!response.ok) {
